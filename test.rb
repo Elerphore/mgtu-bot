@@ -1,5 +1,15 @@
+class Group
+  @id;
+  @text;
+  def initialize(id, text)
+    @id = id;
+    @text = text;
+  end
 
-weekNumber = Time.now.strftime("%u").to_i;;
-weekCount = Time.now.strftime("%U").to_i;;
-puts(weekCount);
-puts(weekCount.even?);
+  attr_reader :id, :text
+
+end
+
+firstGroup = Group.new(1, "First Group");
+
+puts(firstGroup.text);
