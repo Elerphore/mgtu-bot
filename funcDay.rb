@@ -1,29 +1,25 @@
 require 'roo'
+$xlsx = Roo::Excelx.new("./parsers.xlsx");
 
+def funcListPars(day, groupId)
+@parsArray = [];     
 $NumberOne = 0;
 $NumberTwo = 0;
 $mainArray = [];
 $countX = 1;
 $countY = 3;
 
-
-$xlsx = Roo::Excelx.new("./parsers.xlsx");
-
-def funcListPars(day, groupId)
-@parsArray = [];     
 $xlsx.each_row_streaming.to_a.flatten.find do |row|
    if row.inspect.include?(day); 
-
       $mainArray.push(row);
-
       $NumberOne = $mainArray[0];
       $NumberTwo = $mainArray[1];
-
    end
 end
 
 
    if $weekCount.even? == false
+
       while 
          $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + 1) != nil ||
          $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + 3) != nil
@@ -46,6 +42,7 @@ end
       end
          $countX = 1;
          return @parsArray;
+
       else
       while 
          $xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + 1) != nil ||
