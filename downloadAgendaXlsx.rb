@@ -20,7 +20,7 @@ scheduler = Rufus::Scheduler.new
 # #   # (see "man 5 crontab" in your terminal)
 # # end
 
-scheduler.every '2m' do
+scheduler.every '20m' do
 puts('kek')
 end
 
