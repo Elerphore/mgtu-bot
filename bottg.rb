@@ -2,7 +2,7 @@ require 'telegram/bot'
 require './parserexcel.rb'
 require './DefaultArrayComponent'
 
-$selectedDay = 0;
+$selectedDay = 1;
 token = '1010148951:AAFCVQ9oeZZlPBEvW-_FIPYFicf24wKFg_U'
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
