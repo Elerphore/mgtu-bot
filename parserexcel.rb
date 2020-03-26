@@ -1,10 +1,9 @@
-zrequire 'roo'
+require 'roo'
 require './funcDay'
 require './DefaultArrayComponent'
 
 require './CheckAgendaDate.rb'
 
-ChangeOldFile();
 
 def funcToday(selectedGroup, selectedDay)
 

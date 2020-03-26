@@ -1,7 +1,10 @@
 require 'roo'
+require './CheckSubsLesson'
+
 $xlsx = Roo::Excelx.new("./parsers.xlsx");
 
 def funcListPars(day, groupId)
+@daySelected = day;
 @parsArray = [];     
 $NumberOne = 0;
 $NumberTwo = 0;
@@ -41,6 +44,15 @@ end
          
       end
          $countX = 1;
+					if File.exist?('./changeAgenda.xlsx')
+						@arraySubsLess = subsLessonFunc; 
+						@arraySubsLess.each do |lesson|
+							if lesson.day == @daySelected;
+									@parsArray.delete_at(lesson.number - 1);
+									@parsArray.insert(lesson.number - 1, lesson.title);
+							end
+						end
+					end
          return @parsArray;
 
       else
@@ -63,7 +75,27 @@ end
          $countX = $countX + 2;
       end
       $countX = 1;
-      return @parsArray;
+			if File.exist?('./changeAgenda.xlsx')
+				@arraySubsLess = subsLessonFunc; 
+				@arraySubsLess.each do |lesson|
+					if lesson.day == @daySelected;
+							@parsArray.delete_at(lesson.number - 1);
+							@parsArray.insert(lesson.number - 1, lesson.title);
+					end
+				end
+			end
+			@parsedArray = [];
+			@string = '';
+			@parsArray.each do |less|
+				if less == nil || /\d.\-{2,10}/.match?(less) || /\-{2,10}/.match?(less)
+					less = "Пары нет"
+				end
+				
+				@string =  @string + "\n" + "#{less}";
+			end
+			
+			p @string;
+      return @string;
 end
 end
 

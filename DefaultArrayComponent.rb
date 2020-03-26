@@ -31,3 +31,11 @@ $Sunday = WeekDay.new(7, "Воскресенье");
 
 $arraysWeek = [$Monday, $Tuesday, $Wednesday, $Thursday, $Friday, $Saturday, $Sunday];
 
+class SubLesson
+	def initialize(number, title, day)
+		@number = number;
+		@title = title;
+		@day = day;
+	end
+	attr_reader :number, :title, :day
+end
