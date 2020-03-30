@@ -1,84 +1,52 @@
 require 'roo'
 require './CheckSubsLesson'
 
-$xlsx = Roo::Excelx.new("./parsers.xlsx");
 
-def funcListPars(day, groupId)
-@daySelected = day;
+def funcListPars(day, groupId, groupTitle)
 @parsArray = [];     
-$NumberOne = 0;
-$NumberTwo = 0;
 $mainArray = [];
 $countX = 1;
 $countY = 3;
+CheckBaseAgendaExist(groupTitle)
+$xlsx = Roo::Excelx.new("BaseAgendaFiles/#{groupTitle}.xlsx");
 
 $xlsx.each_row_streaming.to_a.flatten.find do |row|
-   if row.inspect.include?(day); 
-      $mainArray.push(row);
-      $NumberOne = $mainArray[0];
-      $NumberTwo = $mainArray[1];
-   end
+	if row.inspect.include?(day); 
+		$mainArray.push(row);
+		$NumberOne = $mainArray[0];
+		$numberTwo = $mainArray[1];
+	end
 end
 
-
-   if $weekCount.even? == false
+if $weekCount.even? == false;
+	$currentWeek = $NumberOne;
+else
+	$currentWeek = $numberTwo;
+end
 
       while 
-         $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + 1) != nil ||
-         $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + 3) != nil
+         $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 1) != nil ||
+         $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 3) != nil
 
          if groupId == 1
-            @parsArray.push($xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + 1));
+            @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 1));
 
          elsif groupId == 2
-           if 
-            $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + $countY) == nil &&
-            $xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX + 1, $NumberOne.coordinate[1] + $countY + 1) != nil
-               @parsArray.push($xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + $countY - 2))
-            else 
-            @parsArray.push($xlsx.sheet('week').cell($NumberOne.coordinate[0] + $countX, $NumberOne.coordinate[1] + $countY));      
-            end
-            
-         end
-         $countX = $countX + 2;
-         
-      end
-         $countX = 1;
-					if File.exist?('./changeAgenda.xlsx')
-						@arraySubsLess = subsLessonFunc; 
-						@arraySubsLess.each do |lesson|
-							if lesson.day == @daySelected;
-									@parsArray.delete_at(lesson.number - 1);
-									@parsArray.insert(lesson.number - 1, lesson.title);
-							end
-						end
-					end
-         return @parsArray;
-
-      else
-      while 
-         $xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + 1) != nil ||
-         $xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + 3) != nil
-
-         if groupId == 1
-            @parsArray.push($xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + 1));
-
-         elsif groupId == 2
-           if $xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + $countY) == nil &&
-               $xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX + 1, $NumberTwo.coordinate[1] + $countY + 1) != nil
+           if $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY) == nil &&
+               $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX + 1, $currentWeek.coordinate[1] + $countY + 1) != nil
                
-               @parsArray.push($xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + $countY - 2))
+               @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY - 2))
             else 
-            @parsArray.push($xlsx.sheet('week').cell($NumberTwo.coordinate[0] + $countX, $NumberTwo.coordinate[1] + $countY));      
+            @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY));      
             end
          end
          $countX = $countX + 2;
       end
       $countX = 1;
 			if File.exist?('./changeAgenda.xlsx')
-				@arraySubsLess = subsLessonFunc; 
+				@arraySubsLess = subsLessonFunc(groupTitle); 
 				@arraySubsLess.each do |lesson|
-					if lesson.day == @daySelected;
+					if lesson.day == day;
 							@parsArray.delete_at(lesson.number - 1);
 							@parsArray.insert(lesson.number - 1, lesson.title);
 					end
@@ -97,6 +65,3 @@ end
 			p @string;
       return @string;
 end
-end
-
-

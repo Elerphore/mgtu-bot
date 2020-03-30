@@ -39,3 +39,6 @@ class SubLesson
 	end
 	attr_reader :number, :title, :day
 end
+
+
+$cookies = Hash.new;

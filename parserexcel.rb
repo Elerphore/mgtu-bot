@@ -1,12 +1,9 @@
-require 'roo'
 require './funcDay'
 require './DefaultArrayComponent'
-
 require './CheckAgendaDate.rb'
 
 
-def funcToday(selectedGroup, selectedDay)
-
+def funcToday(selectedGroup, selectedDay, groupTitle)
 @selectedGroupId = selectedGroup.id
 @selectedDay = selectedDay;
 
@@ -46,13 +43,13 @@ def funcToday(selectedGroup, selectedDay)
 			return funcListPars($arraysWeek[4].title, @selectedGroupId);
 		end
 
-	elsif $weekNumber == 5
+	elsif $weekNumber == 7
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[4].title, @selectedGroupId);
+			return funcListPars($arraysWeek[4].title, @selectedGroupId, groupTitle);
 		when 2
-			return funcListPars($arraysWeek[5].title, @selectedGroupId);
+			return funcListPars($arraysWeek[5].title, @selectedGroupId, groupTitle);
 		end
 
 	elsif $weekNumber == 6
@@ -65,13 +62,13 @@ def funcToday(selectedGroup, selectedDay)
 		end
 
 
-	elsif $weekNumber == 7
+	elsif $weekNumber == 5
 		
 		case @selectedDay
 		when 1
 			return "Today is sunday. Just chill bro.";
 		when 2
-			return funcListPars($arraysWeek[0].title, @selectedGroupId);		
+			return funcListPars($arraysWeek[0].title, @selectedGroupId, groupTitle);		
 		end
 
 	end
