@@ -60,8 +60,6 @@ end
 				end
 				
 				@string =  @string + "\n" + "#{less}";
-			end
-			
-			p @string;
-      return @string;
+		end
+	return @string;
 end

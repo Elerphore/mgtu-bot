@@ -40,8 +40,6 @@ def ChangeOldFile
 end
 
 def CheckBaseAgendaExist(group)
-p group;
-
 	if File.exist?("BaseAgendaFiles/#{group}.xlsx")
 		@File = File.open("BaseAgendaFiles/#{group}.xlsx");
 		@oldFile = @File.mtime().strftime "%m-%d";
@@ -61,17 +59,31 @@ p group;
 			$ContentCss = content.css('.fp-filename').children[i].text;
 			$arrayGroupses.push($ContentCss);
 		end
-		p $arrayGroupses.include?("#{group}.xlsx");
-		p "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{group}.xlsx";
-		if $arrayGroupses.include?("#{group}.xlsx")
+
+		@changeTitle = nil;
+		$arrayGroupses.each do |tera|
+			if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/)
+				 @changeTitle = tera;
+			end
+		end
+
+
+		if $arrayGroupses.include?("#{group}.xlsx") 
 			link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{group}.xlsx"
-					p link;
-					encoded_url = URI.encode(link)
-					encoded_pars = URI.parse(encoded_url)
-					if group != nil
-						download = open(encoded_pars);
-						IO.copy_stream(download, "BaseAgendaFiles/#{group}.xlsx")
-					end
+			encoded_url = URI.encode(link)
+			encoded_pars = URI.parse(encoded_url)
+			if group != nil
+				download = open(encoded_pars);
+				IO.copy_stream(download, "BaseAgendaFiles/#{group}.xlsx")
+			end
+		elsif @changeTitle != nil
+			link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{@changeTitle}"
+			encoded_url = URI.encode(link)
+			encoded_pars = URI.parse(encoded_url)
+			if group != nil
+				download = open(encoded_pars);
+				IO.copy_stream(download, "BaseAgendaFiles/#{group}.xlsx")
+			end
 		else
 			@id = @id + 1;
 			@path = @path + 1;
@@ -80,5 +92,4 @@ p group;
 	else
 		p 'Da'		
 	end
-
 end
