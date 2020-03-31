@@ -1,43 +1,43 @@
 require 'roo'
 require './CheckSubsLesson'
-
+$countX = 1;
+$countY = 3;
 
 def funcListPars(day, groupId, groupTitle)
 @parsArray = [];     
-$mainArray = [];
-$countX = 1;
-$countY = 3;
+@mainArray = [];
+
 CheckBaseAgendaExist(groupTitle)
 $xlsx = Roo::Excelx.new("BaseAgendaFiles/#{groupTitle}.xlsx");
 
 $xlsx.each_row_streaming.to_a.flatten.find do |row|
 	if row.inspect.include?(day); 
-		$mainArray.push(row);
-		$NumberOne = $mainArray[0];
-		$numberTwo = $mainArray[1];
+		@mainArray.push(row);
+		@NumberOne = @mainArray[0];
+		@numberTwo = @mainArray[1];
 	end
 end
 
 if $weekCount.even? == false;
-	$currentWeek = $NumberOne;
+	@currentWeek = @NumberOne;
 else
-	$currentWeek = $numberTwo;
+	@currentWeek = @numberTwo;
 end
 
       while 
-         $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 1) != nil ||
-         $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 3) != nil
+         $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1) != nil ||
+         $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 3) != nil
 
          if groupId == 1
-            @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + 1));
+            @parsArray.push($xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1));
 
          elsif groupId == 2
-           if $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY) == nil &&
-               $xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX + 1, $currentWeek.coordinate[1] + $countY + 1) != nil
+           if $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY) == nil &&
+               $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY + 1) != nil
                
-               @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY - 2))
+               @parsArray.push($xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY - 2))
             else 
-            @parsArray.push($xlsx.sheet(0).cell($currentWeek.coordinate[0] + $countX, $currentWeek.coordinate[1] + $countY));      
+            @parsArray.push($xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY));      
             end
          end
          $countX = $countX + 2;

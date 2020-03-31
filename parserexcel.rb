@@ -11,27 +11,27 @@ def funcToday(selectedGroup, selectedDay, groupTitle)
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[0].title, @selectedGroupId);
+			return funcListPars($arraysWeek[0].title, @selectedGroupId, groupTitle);
 		when 2
-			return funcListPars($arraysWeek[1].title, @selectedGroupId);
+			return funcListPars($arraysWeek[1].title, @selectedGroupId, groupTitle);
 		end
 
 	elsif $weekNumber == 2
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[1].title, @selectedGroupId);
+			return funcListPars($arraysWeek[1].title, @selectedGroupId, groupTitle);
 		when 2
-			return funcListPars($arraysWeek[2].title, @selectedGroupId);
+			return funcListPars($arraysWeek[2].title, @selectedGroupId, groupTitle);
 		end
 
 	elsif $weekNumber == 3
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[2].title, @selectedGroupId);
+			return funcListPars($arraysWeek[2].title, @selectedGroupId, groupTitle);
 		when 2
-			return funcListPars($arraysWeek[3].title, @selectedGroupId);
+			return funcListPars($arraysWeek[3].title, @selectedGroupId, groupTitle);
 		end
 
 	elsif $weekNumber == 4
@@ -43,7 +43,7 @@ def funcToday(selectedGroup, selectedDay, groupTitle)
 			return funcListPars($arraysWeek[4].title, @selectedGroupId);
 		end
 
-	elsif $weekNumber == 7
+	elsif $weekNumber == 5
 
 		case @selectedDay
 		when 1
@@ -62,7 +62,7 @@ def funcToday(selectedGroup, selectedDay, groupTitle)
 		end
 
 
-	elsif $weekNumber == 5
+	elsif $weekNumber == 7
 		
 		case @selectedDay
 		when 1
