@@ -23,6 +23,7 @@ Telegram::Bot::Client.run(token) do |bot|
   	case message
   		  when Telegram::Bot::Types::CallbackQuery
 					if @arrayGroupsComp.include?(message.data)
+						p message.data;
 						@group = message.data;
 						bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}
 						 бот запомнит её. Если вы хотите её удалить пропишите /removegroup",
@@ -35,24 +36,34 @@ Telegram::Bot::Client.run(token) do |bot|
 				when '/start'
     			@group = checkExistGroup(bot, message)
     		when 'Сегодня 1 группа'
-    			@group = checkExistGroup(bot, message)
+    			@group = checkExistGroup(bot, message);
    				if ChangeOldFile();
-	  	  		bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+   					if @group != nil && @arrayGroupsComp.include?(@group)
+		  	  		bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+   					end
 					end
 				when 'Сегодня 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						if @group != nil && @arrayGroupsComp.include?(@group)
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						end
 					end
 	    when 'Завтра 1 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						if @group != nil && @arrayGroupsComp.include?(@group)
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						end
+
+						
 					end
 	    when 'Завтра 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile()
-	    			bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						if @group != nil && @arrayGroupsComp.include?(@group)
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
+						end
 					end
 				end
 

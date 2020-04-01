@@ -19,14 +19,14 @@ def ChangeOldFile
 		File.delete('./changeAgenda.xlsx') if File.exist?("./changeAgenda.xlsx");
 
 		content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
-		$lenghtArrayCSS = content.css('.fp-filename').children.length;
-		(0...$lenghtArrayCSS).each do |i| 
+		@lenghtArrayCSS = content.css('.fp-filename').children.length;
+		(0...@lenghtArrayCSS).each do |i| 
 
-		$ContentCss = content.css('.fp-filename').children[i].text
+		@ContentCss = content.css('.fp-filename').children[i].text
 
-		case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?($ContentCss)
+		case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?(@ContentCss)
 			when true
-			$agendaFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{$ContentCss}"
+			$agendaFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{@ContentCss}"
 			encoded_url = URI.encode($agendaFile)
 			encoded_pars = URI.parse(encoded_url)
 			download = open(encoded_pars);
@@ -40,6 +40,8 @@ def ChangeOldFile
 end
 
 def CheckBaseAgendaExist(group)
+	# p group;
+	@arrayGroupses = [];
 	if File.exist?("BaseAgendaFiles/#{group}.xlsx")
 		@File = File.open("BaseAgendaFiles/#{group}.xlsx");
 		@oldFile = @File.mtime().strftime "%m-%d";
@@ -52,23 +54,21 @@ def CheckBaseAgendaExist(group)
 		@path = 1160925;
 
 		while !File.exist?("BaseAgendaFiles/#{group}.xlsx")
-		content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
-		$lenghtArrayCSS = content.css('.fp-filename').children.length;
-
-		(0...$lenghtArrayCSS).each do |i| 
-			$ContentCss = content.css('.fp-filename').children[i].text;
-			$arrayGroupses.push($ContentCss);
+		content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+		@lenghtArrayCSS = content.css('.fp-filename').children.length;
+		(0...@lenghtArrayCSS).each do |i| 
+			@ContentCss = content.css('.fp-filename').children[i].text;
+			@arrayGroupses.push(@ContentCss);
 		end
-
 		@changeTitle = nil;
-		$arrayGroupses.each do |tera|
-			if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/)
+		@arrayGroupses.each do |tera|
+			if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/) && @changeTitle == nil
 				 @changeTitle = tera;
 			end
 		end
 
 
-		if $arrayGroupses.include?("#{group}.xlsx") 
+		if @arrayGroupses.include?("#{group}.xlsx") 
 			link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{group}.xlsx"
 			encoded_url = URI.encode(link)
 			encoded_pars = URI.parse(encoded_url)

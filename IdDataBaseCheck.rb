@@ -17,12 +17,12 @@ def checkExistGroup(bot, message)
 	@userHash = @results.each[0];
 	if @userHash != nil 
 		bot.api.send_message(chat_id: message.chat.id, 
-		                     text: "Ваша группа: #{@userHash["group_name"]}",
+		                     text: "У вас есть выбранная группа",
 												reply_markup: $daySelect);
 		return @userHash["group_name"];
 	else
 		bot.api.send_message(chat_id: message.chat.id, 
 		                     text: 'Бот не знает вашей группы, выберите её из списка.', 
-		                     reply_markup: @selecteGroup)
+		                     reply_markup: @selecteGroup);
 	end
 end

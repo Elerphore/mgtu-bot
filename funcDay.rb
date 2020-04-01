@@ -6,7 +6,6 @@ $countY = 3;
 def funcListPars(day, groupId, groupTitle)
 @parsArray = [];     
 @mainArray = [];
-
 CheckBaseAgendaExist(groupTitle)
 $xlsx = Roo::Excelx.new("BaseAgendaFiles/#{groupTitle}.xlsx");
 
