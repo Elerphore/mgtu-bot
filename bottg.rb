@@ -55,8 +55,6 @@ Telegram::Bot::Client.run(token) do |bot|
 						if @group != nil && $arrayGroupses.include?(@group)
 							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
 						end
-
-						
 					end
 	    when 'Завтра 2 группа'
     			@group = checkExistGroup(bot, message)
@@ -66,7 +64,6 @@ Telegram::Bot::Client.run(token) do |bot|
 						end
 					end
 				end
-
   	end
   end
 end

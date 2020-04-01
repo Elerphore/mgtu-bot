@@ -3,28 +3,28 @@ require 'telegram/bot'
 
 
 
-def getArrayButtonsGroup()
-	@id = 573029
-	$arrayGroupses = []
-	while @id != 573034
-		$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
-		@lenghtArrayCSS = $content.css('.fp-filename').children.length;
+# def getArrayButtonsGroup()
+# 	@id = 573029
+# 	$arrayGroupses = []
+# 	while @id != 573034
+# 		$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+# 		@lenghtArrayCSS = $content.css('.fp-filename').children.length;
 
-		(0...@lenghtArrayCSS).each do |i| 
-			@ContentCss = $content.css('.fp-filename').children[i].text
-			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
-				$arrayGroupses.push(@ContentCss.delete('.xlsx'));
-			end
-		end
-			@id = @id + 1;
-	end
+# 		(0...@lenghtArrayCSS).each do |i| 
+# 			@ContentCss = $content.css('.fp-filename').children[i].text
+# 			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
+# 				$arrayGroupses.push(@ContentCss.delete('.xlsx'));
+# 			end
+# 		end
+# 			@id = @id + 1;
+# 	end
 
-	@keyboards = $arrayGroupses.map do |arr|
-		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
-	end
-	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(
-	                                    inline_keyboard: @keyboards);
-end
+# 	@keyboards = $arrayGroupses.map do |arr|
+# 		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
+# 	end
+# 	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(
+# 	                                    inline_keyboard: @keyboards);
+# end
 
 def checkExistGroup(bot, message)
 	@id = 573029
