@@ -22,7 +22,7 @@ Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
   	case message
   		  when Telegram::Bot::Types::CallbackQuery
-					if @arrayGroupsComp.include?(message.data)
+					if $arrayGroupses.include?(message.data)
 						p message.data;
 						@group = message.data;
 						bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}
@@ -38,21 +38,21 @@ Telegram::Bot::Client.run(token) do |bot|
     		when 'Сегодня 1 группа'
     			@group = checkExistGroup(bot, message);
    				if ChangeOldFile();
-   					if @group != nil && @arrayGroupsComp.include?(@group)
+   					if @group != nil
 		  	  		bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
    					end
 					end
 				when 'Сегодня 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
-						if @group != nil && @arrayGroupsComp.include?(@group)
+						if @group != nil 
 							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
 						end
 					end
 	    when 'Завтра 1 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
-						if @group != nil && @arrayGroupsComp.include?(@group)
+						if @group != nil 
 							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
 						end
 
@@ -61,7 +61,7 @@ Telegram::Bot::Client.run(token) do |bot|
 	    when 'Завтра 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile()
-						if @group != nil && @arrayGroupsComp.include?(@group)
+						if @group != nil
 							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", reply_markup: $daySelect, parse_mode: "Markdown")
 						end
 					end
