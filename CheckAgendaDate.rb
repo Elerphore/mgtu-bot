@@ -16,9 +16,7 @@ def ChangeOldFile
 	if !(@oldFile == $currentDate);
 		@FilesOld.close if File.exist?("./changeAgenda.xlsx");
 		File.delete('./changeAgenda.xlsx') if File.exist?("./changeAgenda.xlsx");
-
-		# content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
-		content = Nokogiri::HTML(::OpenURI.open_uri('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
+		content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
 		(0...@lenghtArrayCSS).each do |i| 
 
@@ -54,8 +52,7 @@ def CheckBaseAgendaExist(group)
 		@path = 1160925;
 
 		while !File.exist?("BaseAgendaFiles/#{group}.xlsx")
-		# content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
-		content = Nokogiri::HTML(::OpenURI.open_uri("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+		content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
 		(0...@lenghtArrayCSS).each do |i| 
 			@ContentCss = content.css('.fp-filename').children[i].text;
