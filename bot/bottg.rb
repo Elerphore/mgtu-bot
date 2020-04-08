@@ -1,11 +1,9 @@
-files = Dir.glob("*")
-p files;
 
-require 'telegram/bot';
-require './src/parserexcel.rb';
-require './src/DefaultArrayComponent.rb';
-require './src/CheckAgendaDate.rb';
-require './src/IdDataBaseCheck.rb';
+require './bot/src/parserexcel.rb';
+require './bot/src/DefaultArrayComponent.rb';
+require './bot/src/CheckAgendaDate.rb';
+require './bot/src/IdDataBaseCheck.rb';
+
 
 
 
