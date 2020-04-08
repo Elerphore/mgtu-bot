@@ -18,7 +18,7 @@ Telegram::Bot::Client.run(token) do |bot|
   		  when Telegram::Bot::Types::CallbackQuery
 					if $arrayGroupses.include?(message.data)
 						@group = message.data;
-						bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}бот запомнит её.
+						bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group} бот запомнит её.
 Если вы хотите её удалить пропишите /delgroup",
 						 reply_markup: $daySelect);
 						$db.query("INSERT INTO heroku_378417f804fd0eb.`user_table_group` 
@@ -61,6 +61,7 @@ Telegram::Bot::Client.run(token) do |bot|
 		                     :password => "df82ac8e");
 						$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` 
 						          WHERE (`user_id` = '#{message.chat.id}')");
+						@group = checkExistGroup(bot, message);
 					bot.api.send_message(chat_id: message.chat.id, 
 		                     text: 'Выбранная группа удалена.', 
 		                     reply_markup: $selecteGroup);
