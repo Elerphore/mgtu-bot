@@ -1,6 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
 require 'openssl'
+require 'fileutils'
+
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 $arrayGroupses = [];
 
@@ -78,6 +80,12 @@ def CheckBaseAgendaExist(group)
 			link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{@changeTitle}"
 			encoded_url = URI.encode(link)
 			encoded_pars = URI.parse(encoded_url)
+				
+			if !File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
+				FileUtils.mkdir_p './bot/xlsx/BaseAgendaFiles'
+			end
+
+
 			if group != nil
 				download = open(encoded_pars);
 				IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
