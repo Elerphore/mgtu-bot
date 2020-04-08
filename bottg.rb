@@ -19,8 +19,8 @@ Telegram::Bot::Client.run(token) do |bot|
 					if $arrayGroupses.include?(message.data)
 						@group = message.data;
 						bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}
-						 бот запомнит её.
-						 Если вы хотите её удалить пропишите /удалитьгруппу",
+					бот запомнит её.
+					Если вы хотите её удалить пропишите /delgroup",
 						 reply_markup: $daySelect);
 						$db.query("INSERT INTO heroku_378417f804fd0eb.`user_table_group` 
 						          VALUES  ('#{message.from.id}', '#{message.data}')");
