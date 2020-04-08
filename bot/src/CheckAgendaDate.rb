@@ -1,5 +1,5 @@
 require 'nokogiri'
-# require 'open-uri'
+require 'open-uri'
 require 'openssl'
 require 'fileutils'
 
@@ -19,7 +19,7 @@ def ChangeOldFile
 		@FilesOld.close if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		File.delete("./bot/xlsx/changeAgenda.xlsx") if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		begin
-			content = Nokogiri::HTML(URI.open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
+			content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
 		rescue OpenURI::HTTPError => error
 			if error
 				errorFunc();

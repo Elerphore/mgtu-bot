@@ -3,7 +3,7 @@ def createArrayGroups
 	$arrayGroupses = []
 	while @id != 573034
 		begin
-			$content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+		$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
 		rescue OpenURI::HTTPError => error
 			if error
 				errorFunc();
