@@ -7,7 +7,7 @@ def funcListPars(day, groupId, groupTitle)
 @parsArray = [];     
 @mainArray = [];
 CheckBaseAgendaExist(groupTitle)
-$xlsx = Roo::Excelx.new("./xlsx/BaseAgendaFiles/#{groupTitle}.xlsx");
+$xlsx = Roo::Excelx.new("./bot/xlsx/BaseAgendaFiles/#{groupTitle}.xlsx");
 
 $xlsx.each_row_streaming.to_a.flatten.find do |row|
 	if row.inspect.include?(day); 
@@ -64,7 +64,7 @@ end
          $countX = $countX + 2;
       end
       $countX = 1;
-			if File.exist?('./xlsx/changeAgenda.xlsx')
+			if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 				@arraySubsLess = subsLessonFunc(groupTitle); 
 				@arraySubsLess.each do |lesson|
 					if lesson.day == day;

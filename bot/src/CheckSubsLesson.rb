@@ -4,7 +4,7 @@ require './bot/src/DefaultArrayComponent'
 def subsLessonFunc(group)
 @numberColumn = nil;
 
-@agenda = Roo::Spreadsheet.open('./xlsx/changeAgenda.xlsx') if File.exist?('./xlsx/changeAgenda.xlsx')
+@agenda = Roo::Spreadsheet.open('./bot/xlsx/changeAgenda.xlsx') if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 @agenda.each_row_streaming.to_a.flatten.find do |row|
 	if row.inspect.include?(group); 
 		@numberColumn = row.coordinate[1];

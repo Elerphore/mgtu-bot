@@ -6,16 +6,16 @@ $arrayGroupses = [];
 
 $currentDate = Time.now.strftime "%m-%d";
 def ChangeOldFile 
-	if File.exist?("./xlsx/changeAgenda.xlsx") 
-		@FilesOld = File.open("./xlsx/changeAgenda.xlsx")
+	if File.exist?("./bot/xlsx/changeAgenda.xlsx") 
+		@FilesOld = File.open("./bot/xlsx/changeAgenda.xlsx")
 		@oldFile = @FilesOld.mtime().strftime "%m-%d";
 		else 
 		@FilesOld = nil
 	end
 
 	if !(@oldFile == $currentDate);
-		@FilesOld.close if File.exist?("./xlsx/changeAgenda.xlsx");
-		File.delete("./xlsx/changeAgenda.xlsx") if File.exist?("./xlsx/changeAgenda.xlsx");
+		@FilesOld.close if File.exist?("./bot/xlsx/changeAgenda.xlsx");
+		File.delete("./bot/xlsx/changeAgenda.xlsx") if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
 		(0...@lenghtArrayCSS).each do |i| 
@@ -28,7 +28,7 @@ def ChangeOldFile
 			encoded_url = URI.encode($agendaFile)
 			encoded_pars = URI.parse(encoded_url)
 			download = open(encoded_pars);
-			IO.copy_stream(download, "./xlsx/changeAgenda.xlsx");
+			IO.copy_stream(download, "./bot/xlsx/changeAgenda.xlsx");
 		end
 
 		end
@@ -40,18 +40,18 @@ end
 def CheckBaseAgendaExist(group)
 	# p group;
 	@arrayGroupses = [];
-	if File.exist?("./xlsx/BaseAgendaFiles/#{group}.xlsx")
-		@File = File.open("./xlsx/BaseAgendaFiles/#{group}.xlsx");
+	if File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
+		@File = File.open("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx");
 		@oldFile = @File.mtime().strftime "%m-%d";
 	else
 		@oldFile = nil;
 	end
 
-	if !(File.exist?("./xlsx/BaseAgendaFiles/#{group}.xlsx") && @oldFile == $currentDate)
+	if !(File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx") && @oldFile == $currentDate)
 		@id = 573029;
 		@path = 1160925;
 
-		while !File.exist?("./xlsx/BaseAgendaFiles/#{group}.xlsx")
+		while !File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 		content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
 		(0...@lenghtArrayCSS).each do |i| 
@@ -72,7 +72,7 @@ def CheckBaseAgendaExist(group)
 			encoded_pars = URI.parse(encoded_url)
 			if group != nil
 				download = open(encoded_pars);
-				IO.copy_stream(download, "./xlsx/BaseAgendaFiles/#{group}.xlsx")
+				IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 			end
 		elsif @changeTitle != nil
 			link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{@changeTitle}"
@@ -80,7 +80,7 @@ def CheckBaseAgendaExist(group)
 			encoded_pars = URI.parse(encoded_url)
 			if group != nil
 				download = open(encoded_pars);
-				IO.copy_stream(download, "./xlsx/BaseAgendaFiles/#{group}.xlsx")
+				IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 			end
 		else
 			@id = @id + 1;
