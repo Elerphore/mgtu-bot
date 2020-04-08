@@ -1,21 +1,15 @@
 require 'roo'
-require './DefaultArrayComponent'
-
+require './src/DefaultArrayComponent'
 
 def subsLessonFunc(group)
 @numberColumn = nil;
 
-@agenda = Roo::Spreadsheet.open('./changeAgenda.xlsx') if File.exist?('./changeAgenda.xlsx')
+@agenda = Roo::Spreadsheet.open('./xlsx/changeAgenda.xlsx') if File.exist?('./xlsx/changeAgenda.xlsx')
 @agenda.each_row_streaming.to_a.flatten.find do |row|
 	if row.inspect.include?(group); 
-		p row.coordinate;
 		@numberColumn = row.coordinate[1];
 	end
 end
-
-p @numberColumn;
-
-
 	$i = 1;
 	$arrayLessons = [];
 

@@ -1,6 +1,6 @@
-require './funcDay'
-require './DefaultArrayComponent'
-require './CheckAgendaDate.rb'
+require './src/funcDay.rb'
+require './src/DefaultArrayComponent'
+require './src/CheckAgendaDate.rb'
 
 
 def funcToday(selectedGroup, selectedDay, groupTitle)
@@ -38,9 +38,9 @@ def funcToday(selectedGroup, selectedDay, groupTitle)
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[3].title, @selectedGroupId);
+			return funcListPars($arraysWeek[3].title, @selectedGroupId, groupTitle);
 		when 2
-			return funcListPars($arraysWeek[4].title, @selectedGroupId);
+			return funcListPars($arraysWeek[4].title, @selectedGroupId, groupTitle);
 		end
 
 	elsif $weekNumber == 5
@@ -56,7 +56,7 @@ def funcToday(selectedGroup, selectedDay, groupTitle)
 
 		case @selectedDay
 		when 1
-			return funcListPars($arraysWeek[5].title, @selectedGroupId);
+			return funcListPars($arraysWeek[5].title, @selectedGroupId, groupTitle);
 		when 2
 			return "Tomorrow will be sunday!"
 		end

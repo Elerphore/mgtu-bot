@@ -1,2 +1,1 @@
-bot: ruby bottg.rb
-work: ruby downloadAgendaXlsx.rb
+bot: ruby ./bot/bottg.rb

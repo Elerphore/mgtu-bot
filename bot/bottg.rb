@@ -1,8 +1,9 @@
 require 'telegram/bot';
-require './parserexcel.rb';
-require './DefaultArrayComponent';
-require './CheckAgendaDate.rb';
-require './IdDataBaseCheck.rb';
+require './src/parserexcel.rb';
+require './src/DefaultArrayComponent.rb';
+require './src/CheckAgendaDate.rb';
+require './src/IdDataBaseCheck.rb';
+
 require 'mysql2';
 $db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => "b4e1fdda6d85bd",
 		                     :password => "df82ac8e");
