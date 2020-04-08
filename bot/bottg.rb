@@ -1,11 +1,13 @@
+files = Dir.glob("*")
+p files;
+
 require 'telegram/bot';
 require './src/parserexcel.rb';
 require './src/DefaultArrayComponent.rb';
 require './src/CheckAgendaDate.rb';
 require './src/IdDataBaseCheck.rb';
 
-files = Dir.glob("*")
-p files;
+
 
 require 'mysql2';
 $db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => "b4e1fdda6d85bd",
