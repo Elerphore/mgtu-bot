@@ -2,7 +2,16 @@ def createArrayGroups
 		@id = 573029
 	$arrayGroupses = []
 	while @id != 573034
-		$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+		begin
+			$content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+		rescue OpenURI::HTTPError => error
+			if error
+				errorFunc();
+				return;
+			end
+		end
+
+
 		@lenghtArrayCSS = $content.css('.fp-filename').children.length;
 
 		(0...@lenghtArrayCSS).each do |i| 
