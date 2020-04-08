@@ -41,3 +41,12 @@ end
 
 
 $cookies = Hash.new;
+
+
+$mainKeyBoardButtons = [
+	[Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 1 группа'),
+		Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 2 группа')],
+		[Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 1 группа'),
+    Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')]
+];
+$daySelect = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: $mainKeyBoardButtons, one_time_keyboard: false);

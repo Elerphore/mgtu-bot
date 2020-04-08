@@ -1,1 +1,1 @@
-bot: ruby ./bot/bottg.rb
+bot: ruby ./bottg.rb
