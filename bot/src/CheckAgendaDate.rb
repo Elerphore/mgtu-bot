@@ -4,6 +4,7 @@ require 'openssl'
 require 'fileutils'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 $arrayGroupses = [];
 
 $currentDate = Time.now.strftime "%m-%d";
@@ -17,7 +18,19 @@ def ChangeOldFile
 	if !(@oldFile == $currentDate)
 		@FilesOld.close if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		File.delete("./bot/xlsx/changeAgenda.xlsx") if File.exist?("./bot/xlsx/changeAgenda.xlsx");
-		content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
+		begin
+			content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
+		rescue OpenURI::HTTPError => error
+			if error
+				errorFunc();
+				return;
+			end
+		end
+
+
+		begin
+			
+		end
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
 
 		if @lenghtArrayCSS != 0
@@ -28,7 +41,14 @@ def ChangeOldFile
 					$agendaFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{@ContentCss}"
 					encoded_url = URI.encode($agendaFile)
 					encoded_pars = URI.parse(encoded_url)
-					download = open(encoded_pars);
+					begin
+						download = open(encoded_pars);
+						rescue OpenURI::HTTPError => error
+							if error
+								errorFunc();
+								return;
+							end
+					end
 					IO.copy_stream(download, "./bot/xlsx/changeAgenda.xlsx");
 				end
 			end
@@ -52,7 +72,14 @@ def CheckBaseAgendaExist(group)
 		@path = 1160925;
 
 			while !File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
-				content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+				begin
+					content = Nokogiri::HTML(URI.open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"));
+				rescue OpenURI::HTTPError => error
+					if error
+						errorFunc();
+						return;
+					end
+				end
 				@lenghtArrayCSS = content.css('.fp-filename').children.length;
 				(0...@lenghtArrayCSS).each do |i| 
 					@ContentCss = content.css('.fp-filename').children[i].text;
@@ -74,7 +101,14 @@ def CheckBaseAgendaExist(group)
 						FileUtils.mkdir_p './bot/xlsx/BaseAgendaFiles'
 					end
 					if group != nil
+					begin
 						download = open(encoded_pars);
+						rescue OpenURI::HTTPError => error
+							if error
+								errorFunc();
+								return;
+							end
+					end
 						IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 					end
 				elsif @changeTitle != nil
@@ -87,7 +121,14 @@ def CheckBaseAgendaExist(group)
 					end
 
 					if group != nil
+					begin
 						download = open(encoded_pars);
+						rescue OpenURI::HTTPError => error
+							if error
+								errorFunc();
+								return;
+							end
+					end
 						IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 					end
 				else

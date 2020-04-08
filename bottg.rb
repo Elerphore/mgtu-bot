@@ -7,7 +7,13 @@ require 'mysql2';
 
 token = '1010148951:AAFCVQ9oeZZlPBEvW-_FIPYFicf24wKFg_U'
 Telegram::Bot::Client.run(token) do |bot|
+	@bot = bot;
   bot.listen do |message|
+  	@message = message;
+  		def errorFunc
+  		@bot.api.send_message(chat_id: @message.chat.id, text: "Произошла ошибка, повторите попытку позже.
+В случае вопросов: @Elerphore", reply_markup: $daySelect, parse_mode: "Markdown")
+  		end
   	case message
   		  when Telegram::Bot::Types::CallbackQuery
 					if $arrayGroupses.include?(message.data)
