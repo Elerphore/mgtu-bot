@@ -65,6 +65,7 @@ end
       end
       $countX = 1;
 			if File.exist?('./bot/xlsx/changeAgenda.xlsx')
+				p 'ITS EXIST'
 				@arraySubsLess = subsLessonFunc(groupTitle); 
 				@arraySubsLess.each do |lesson|
 					if lesson.day == day;
