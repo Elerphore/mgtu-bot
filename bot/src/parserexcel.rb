@@ -1,6 +1,6 @@
-require './src/funcDay.rb'
-require './src/DefaultArrayComponent'
-require './src/CheckAgendaDate.rb'
+require './bot/src/funcDay.rb'
+require './bot/src/DefaultArrayComponent'
+require './bot/src/CheckAgendaDate.rb'
 
 
 def funcToday(selectedGroup, selectedDay, groupTitle)

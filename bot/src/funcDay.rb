@@ -1,5 +1,5 @@
 require 'roo'
-require './src/CheckSubsLesson'
+require './bot/src/CheckSubsLesson'
 $countX = 1;
 $countY = 3;
 
