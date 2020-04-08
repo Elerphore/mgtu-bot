@@ -1,5 +1,5 @@
 require 'nokogiri'
-require 'open-uri'
+# require 'open-uri'
 require 'openssl'
 require 'fileutils'
 
