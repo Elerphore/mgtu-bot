@@ -42,6 +42,9 @@ def ChangeOldFile
 								return;
 							end
 					end
+					if !File.exist?("./bot/xlsx")
+						FileUtils.mkdir_p './bot/xlsx'
+					end
 					IO.copy_stream(download, "./bot/xlsx/changeAgenda.xlsx");
 				end
 			end
