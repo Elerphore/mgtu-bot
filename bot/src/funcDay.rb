@@ -22,7 +22,6 @@ if $weekCount.even? == false;
 else
 	@currentWeek = @numberTwo;
 end
-
       while 
          $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1) != nil ||
          $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 3) != nil
@@ -65,11 +64,11 @@ end
       end
       $countX = 1;
 			if File.exist?('./bot/xlsx/changeAgenda.xlsx')
-				@arraySubsLess = subsLessonFunc(groupTitle); 
+				@arraySubsLess = subsLessonFunc(groupTitle);
 				@arraySubsLess.each do |lesson|
-					if lesson.day == day;
-							@parsArray.delete_at(lesson.number - 1);
-							@parsArray.insert(lesson.number - 1, lesson.title);
+					if lesson[:dayTitle] == day;
+							@parsArray.delete_at(lesson[:count] - 1);
+							@parsArray.insert(lesson[:count] - 1, lesson);
 					end
 				end
 			end

@@ -39,9 +39,7 @@ class SubLesson
 	attr_reader :number, :title, :day
 end
 
-
 $cookies = Hash.new;
-
 
 $mainKeyBoardButtons = [
 	[Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 1 группа'),
@@ -50,3 +48,4 @@ $mainKeyBoardButtons = [
     Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')]
 ];
 $daySelect = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: $mainKeyBoardButtons, one_time_keyboard: false);
+

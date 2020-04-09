@@ -10,29 +10,22 @@ $arrayGroupses = [];
 $currentDate = Time.now.strftime "%m-%d";
 def ChangeOldFile 
 	if File.exist?("./bot/xlsx/changeAgenda.xlsx") 
-		@oldFile = File.open("./bot/xlsx/changeAgenda.xlsx").mtime().strftime "%m-%d"
+		@FilesOld =	File.open("./bot/xlsx/changeAgenda.xlsx")
+		@oldFile = @FilesOld.mtime().strftime "%m-%d"
 		else 
 		@oldFile = nil
 	end
-
 	if !(@oldFile == $currentDate)
 		@FilesOld.close if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		File.delete("./bot/xlsx/changeAgenda.xlsx") if File.exist?("./bot/xlsx/changeAgenda.xlsx");
 		begin
 			content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'));
 		rescue OpenURI::HTTPError => error
-			if error
 				errorFunc();
 				return;
-			end
 		end
 
-
-		begin
-			
-		end
 		@lenghtArrayCSS = content.css('.fp-filename').children.length;
-
 		if @lenghtArrayCSS != 0
 			(0...@lenghtArrayCSS).each do |i| 
 			@ContentCss = content.css('.fp-filename').children[i].text
@@ -55,7 +48,8 @@ def ChangeOldFile
 		else
 			return true;
 		end
-
+	else
+		return true;
 	end
 end
 

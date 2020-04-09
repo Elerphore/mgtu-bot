@@ -3,6 +3,7 @@ require './bot/src/parserexcel.rb';
 require './bot/src/DefaultArrayComponent.rb';
 require './bot/src/CheckAgendaDate.rb';
 require './bot/src/IdDataBaseCheck.rb';
+
 require 'mysql2';
 
 token = '1010148951:AAFCVQ9oeZZlPBEvW-_FIPYFicf24wKFg_U'
