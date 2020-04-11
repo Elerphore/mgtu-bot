@@ -1,5 +1,5 @@
 require 'roo'
-require './bot/src/DefaultArrayComponent'
+require './bot/src/DefaultVariables.rb'
 
 def subsLessonFunc(group)
 	@numberColumn = nil;

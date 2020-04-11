@@ -1,6 +1,6 @@
 require 'telegram/bot';
-require './bot/src/parserexcel.rb';
-require './bot/src/DefaultArrayComponent.rb';
+require './bot/src/DayDiverting.rb';
+require './bot/src/DefaultVariables.rb';
 require './bot/src/CheckAgendaDate.rb';
 require './bot/src/IdDataBaseCheck.rb';
 

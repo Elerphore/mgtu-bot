@@ -1,5 +1,5 @@
-require './bot/src/funcDay.rb'
-require './bot/src/DefaultArrayComponent'
+require './bot/src/ScheduleParsing.rb'
+require './bot/src/DefaultVariables.rb'
 require './bot/src/CheckAgendaDate.rb'
 
 def funcToday(selectedGroup, selectedDay, groupTitle)
