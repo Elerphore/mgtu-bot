@@ -32,28 +32,32 @@ Telegram::Bot::Client.run(token) do |bot|
     			@group = checkExistGroup(bot, message);
    				if ChangeOldFile();
    					if @group != nil && (@group.kind_of? String)
-		  	  		bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", parse_mode: "Markdown")
+		  	  		bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", parse_mode: "Markdown",
+		  	  		                     reply_markup: $daySelect)
    					end
 					end
 				when 'Сегодня 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
 						if @group != nil && (@group.kind_of? String)
-							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", parse_mode: "Markdown")
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", parse_mode: "Markdown",
+							                     reply_markup: $daySelect)
 						end
 					end
 	    when 'Завтра 1 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile();
 						if @group != nil && (@group.kind_of? String)
-							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", parse_mode: "Markdown")
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", parse_mode: "Markdown",
+							                     reply_markup: $daySelect)
 						end
 					end
 	    when 'Завтра 2 группа'
     			@group = checkExistGroup(bot, message)
 					if ChangeOldFile()
 						if @group != nil && (@group.kind_of? String)
-							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", parse_mode: "Markdown")
+							bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", parse_mode: "Markdown",
+							                     reply_markup: $daySelect)
 						end
 					end
 			when 'Изменить группу'
