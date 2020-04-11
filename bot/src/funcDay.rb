@@ -1,23 +1,24 @@
 require 'roo'
 require './bot/src/CheckSubsLesson'
-$countX = 1;
 $countY = 3;
 
 def funcListPars(day, groupId, groupTitle)
 @parsArray = [];     
 @mainArray = [];
+$countX = 1;
+
 CheckBaseAgendaExist(groupTitle)
 $xlsx = Roo::Excelx.new("./bot/xlsx/BaseAgendaFiles/#{groupTitle}.xlsx");
 
 $xlsx.each_row_streaming.to_a.flatten.find do |row|
-	if row.inspect.include?(day); 
+	if row.inspect.include?(day.title); 
 		@mainArray.push(row);
 		@NumberOne = @mainArray[0];
 		@numberTwo = @mainArray[1];
 	end
 end
 
-if $weekCount.even? == false;
+if Time.now.strftime("%U").to_i.even? == false;
 	@currentWeek = @NumberOne;
 else
 	@currentWeek = @numberTwo;
@@ -62,22 +63,20 @@ end
          end
          $countX = $countX + 2;
       end
-      $countX = 1;
 			if File.exist?('./bot/xlsx/changeAgenda.xlsx')
-				@arraySubsLess = subsLessonFunc(groupTitle);
-				@arraySubsLess.each do |lesson|
-					if lesson[:dayTitle] == day;
-							@parsArray.delete_at(lesson[:count] - 1);
-							@parsArray.insert(lesson[:count] - 1, lesson);
+				subsLessonFunc(groupTitle).each do |lesson|
+					if lesson[:dayTitle] == day.title;
+							@parsArray.delete_at(lesson[:count] - 2);
+							@parsArray.insert(lesson[:count] - 2, lesson);
 					end
 				end
 			end
-			@parsedArray = [];
 			@string = '';
 			@parsArray.each do |less|
 				if less[:title] != nil
 					@string =  @string + "#{less[:count]}. #{less[:title]} #{less[:teacher]} #{less[:room]} " + "\n";
 				end
 		end
-	return @string;
+		@poststring = "Расписание группы: #{groupTitle} на #{day.subtitle}: \n\n"
+	return @poststring + @string;
 end

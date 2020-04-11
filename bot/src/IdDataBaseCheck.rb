@@ -41,14 +41,10 @@ def checkExistGroup(bot, message)
 												WHERE user_id = #{message.chat.id}");
 	@userHash = @results.each[0];
 	if @userHash != nil 
-		bot.api.send_message(chat_id: message.chat.id, 
-		                     text: "У вас есть выбранная группа #{@userHash["group_name"]}",
-												reply_markup: $daySelect);
 		return @userHash["group_name"];
 	else
 		createArrayGroups();
 		if $selecteGroup != nil
-
 					bot.api.send_message(chat_id: message.chat.id, 
 		                     text: 'Бот не знает вашей группы, выберите её из списка.', 
 		                     reply_markup: $selecteGroup);
