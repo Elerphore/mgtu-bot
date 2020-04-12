@@ -27,7 +27,7 @@ $Friday = WeekDay.new(5, "Пятница", "Пятницу");
 $Saturday = WeekDay.new(6, "Суббота", "Субботу");
 $Sunday = WeekDay.new(7, "Понедельник", "Понедельник");
 
-$arraysWeek = [$Monday, $Tuesday, $Wednesday, $Thursday, $Friday, $Saturday, $Sunday];
+$arraysWeek = [$Monday, $Tuesday, $Wednesday, $Thursday, $Friday, $Saturday, $Sunday, $Sunday];
 
 class SubLesson
 	def initialize(number, title, day)
