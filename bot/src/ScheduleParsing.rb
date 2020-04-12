@@ -66,8 +66,7 @@ end
 			if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 				subsLessonFunc(groupTitle).each do |lesson|
 					if lesson[:dayTitle] == day.title;
-							@parsArray.delete_at(lesson[:count] - 2);
-							@parsArray.insert(lesson[:count] - 2, lesson);
+							@parsArray[lesson[:count] - 1] = lesson;
 					end
 				end
 			end
