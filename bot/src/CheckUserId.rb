@@ -7,10 +7,9 @@ def createArrayGroups
 		rescue OpenURI::HTTPError => error
 			if error
 				errorFunc();
-				return;
+				return nil;
 			end
 		end
-
 
 		@lenghtArrayCSS = $content.css('.fp-filename').children.length;
 
@@ -34,8 +33,8 @@ def createArrayGroups
 end
 
 def checkExistGroup(bot, message)
-	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"],
-		                     :password => ENV["password"]);
+	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => "b4e1fdda6d85bd",
+		                     :password => "df82ac8e");
 	@userHash = Hash.new;
 	@results = $db.query("SELECT * FROM heroku_378417f804fd0eb.`user_table_group`
 												WHERE user_id = #{message.chat.id}");
