@@ -86,7 +86,7 @@ def CheckBaseAgendaExist(group)
 				@changeTitle = nil
 				@arrayGroupses.each do |tera|
 					if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/) && @changeTitle == nil
-						 @changeTitle = tera
+						@changeTitle = tera
 					end
 				end
 
