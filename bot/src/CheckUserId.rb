@@ -28,25 +28,20 @@ def createArrayGroups
 	@keyboards = $arrayGroupses.map do |arr|
 		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
 	end
-	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(
-	                                    inline_keyboard: @keyboards)
+	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: @keyboards)
 end
 
 def checkExistGroup(bot, message)
-	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"],
-		                     :password => ENV["password"])
+	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"], :password => ENV["password"])
 	@userHash = Hash.new
-	@results = $db.query("SELECT * FROM heroku_378417f804fd0eb.`user_table_group`
-												WHERE user_id = #{message.chat.id}")
+	@results = $db.query("SELECT * FROM heroku_378417f804fd0eb.`user_table_group` WHERE user_id = #{message.chat.id}")
 	@userHash = @results.each[0]
 	if @userHash != nil
 		return @userHash["group_name"]
 	else
 		createArrayGroups()
 		if $selecteGroup != nil
-					bot.api.send_message(chat_id: message.chat.id,
-		                     text: 'Бот не знает вашей группы, выберите её из списка.',
-		                     reply_markup: $selecteGroup)
+					bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: $selecteGroup)
 		end
 	end
 end

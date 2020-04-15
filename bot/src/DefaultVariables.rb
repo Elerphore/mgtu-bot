@@ -1,10 +1,10 @@
 class Group
-  def initialize(id, text)
-    @id = id
-    @text = text
-  end
+	def initialize(id, text)
+		@id = id
+		@text = text
+	end
 
-  attr_reader :id, :text
+	attr_reader :id, :text
 end
 
 $firstGroup = Group.new(1, "First Group")
@@ -44,8 +44,8 @@ $mainKeyBoardButtons = [
 	[Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 1 группа'),
 		Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 2 группа')],
 		[Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 1 группа'),
-    Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')],
-    [Telegram::Bot::Types::KeyboardButton.new(text: 'Изменить группу')]
+		Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')],
+		[Telegram::Bot::Types::KeyboardButton.new(text: 'Изменить группу')]
 ]
 $daySelect = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: $mainKeyBoardButtons, one_time_keyboard: false)
 
