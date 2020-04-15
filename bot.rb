@@ -3,11 +3,10 @@ require './bot/src/DayDiverting.rb';
 require './bot/src/DefaultVariables.rb';
 require './bot/src/CheckAgendaDate.rb';
 require './bot/src/CheckUserId.rb';
-
+require './credentials.rb'
 require 'mysql2';
 
-token = '1010148951:AAFCVQ9oeZZlPBEvW-_FIPYFicf24wKFg_U'
-Telegram::Bot::Client.run(token) do |bot|
+Telegram::Bot::Client.run(@token) do |bot|
 	@bot = bot;
   bot.listen do |message|
   	@message = message;
@@ -61,8 +60,8 @@ Telegram::Bot::Client.run(token) do |bot|
 						end
 					end
 			when 'Изменить группу'
-					$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => "b4e1fdda6d85bd",
-		                     :password => "df82ac8e");
+					$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => @username,
+		                     :password => @password);
 						$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` 
 						          WHERE (`user_id` = '#{message.chat.id}')");
 					createArrayGroups()
