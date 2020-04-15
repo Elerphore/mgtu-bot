@@ -1,18 +1,18 @@
 def createArrayGroups
-		@id = 573029
+	@id = 573029
 	$arrayGroupses = []
 	while @id != 573034
 		begin
-		$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"))
+			$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"))
 		rescue OpenURI::HTTPError => error
 			if error
 				errorFunc()
 				return nil
 			end
 		end
-
+		
 		@lenghtArrayCSS = $content.css('.fp-filename').children.length
-
+		
 		(0...@lenghtArrayCSS).each do |i|
 			@ContentCss = $content.css('.fp-filename').children[i].text
 			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
@@ -24,7 +24,7 @@ def createArrayGroups
 		end
 			@id = @id + 1
 	end
-
+	
 	@keyboards = $arrayGroupses.map do |arr|
 		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
 	end
@@ -41,7 +41,7 @@ def checkExistGroup(bot, message)
 	else
 		createArrayGroups()
 		if $selecteGroup != nil
-					bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: $selecteGroup)
+			bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: $selecteGroup)
 		end
 	end
 end

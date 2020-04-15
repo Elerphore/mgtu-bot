@@ -5,12 +5,12 @@ def subsLessonFunc(group)
 	@numberColumn = nil
 	@agenda = Roo::Spreadsheet.open('./bot/xlsx/changeAgenda.xlsx') if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 	@agenda.each_row_streaming.to_a.flatten.find do |row|
-	if row.inspect.include?(group)
-		@numberColumn = row.coordinate[1]
+		if row.inspect.include?(group)
+			@numberColumn = row.coordinate[1]
+		end
 	end
-end
-@i = 1
-@arrayLessons = []
+	@i = 1
+	@arrayLessons = []
 	@agenda.sheet(0).column(@numberColumn).each do |row|
 		@i = @i + 1
 		@lesson = Hash.new

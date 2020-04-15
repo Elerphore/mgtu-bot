@@ -3,7 +3,7 @@ class Group
 		@id = id
 		@text = text
 	end
-
+	
 	attr_reader :id, :text
 end
 
@@ -48,4 +48,3 @@ $mainKeyBoardButtons = [
 		[Telegram::Bot::Types::KeyboardButton.new(text: 'Изменить группу')]
 ]
 $daySelect = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: $mainKeyBoardButtons, one_time_keyboard: false)
-
