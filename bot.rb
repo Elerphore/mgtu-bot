@@ -5,7 +5,7 @@ require './bot/src/CheckAgendaDate.rb';
 require './bot/src/CheckUserId.rb';
 require 'mysql2';
 
-p ENV[:token];
+p ENV;
 
 Telegram::Bot::Client.run(@token) do |bot|
 	@bot = bot;
