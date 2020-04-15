@@ -34,8 +34,8 @@ def createArrayGroups
 end
 
 def checkExistGroup(bot, message)
-	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => @username,
-		                     :password => @password);
+	$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"],
+		                     :password => ENV["password"]);
 	@userHash = Hash.new;
 	@results = $db.query("SELECT * FROM heroku_378417f804fd0eb.`user_table_group`
 												WHERE user_id = #{message.chat.id}");
