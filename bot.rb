@@ -3,7 +3,6 @@ require './bot/src/DayDiverting.rb';
 require './bot/src/DefaultVariables.rb';
 require './bot/src/CheckAgendaDate.rb';
 require './bot/src/CheckUserId.rb';
-require './credentials.rb'
 require 'mysql2';
 
 p ENV[:token];
