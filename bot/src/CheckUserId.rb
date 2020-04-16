@@ -11,9 +11,9 @@ def createArrayGroups
 			end
 		end
 		
-		@lenghtArrayCSS = $content.css('.fp-filename').children.length
+		@lengthArrayCSS = $content.css('.fp-filename').children.length
 		
-		(0...@lenghtArrayCSS).each do |i|
+		(0...@lengthArrayCSS).each do |i|
 			@ContentCss = $content.css('.fp-filename').children[i].text
 			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
 				$arrayGroupses.push(@ContentCss.delete('.xlsx'))

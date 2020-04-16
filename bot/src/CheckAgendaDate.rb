@@ -26,9 +26,9 @@ def ChangeOldFile
 			return nil
 		end
 		
-		@lenghtArrayCSS = content.css('.fp-filename').children.length
-		if @lenghtArrayCSS != 0
-			(0...@lenghtArrayCSS).each do |i|
+		@lengthArrayCSS = content.css('.fp-filename').children.length
+		if @lengthArrayCSS != 0
+			(0...@lengthArrayCSS).each do |i|
 				@ContentCss = content.css('.fp-filename').children[i].text
 				case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?(@ContentCss)
 				when true
@@ -78,8 +78,8 @@ def CheckBaseAgendaExist(group)
 					return nil
 				end
 			end
-			@lenghtArrayCSS = content.css('.fp-filename').children.length
-			(0...@lenghtArrayCSS).each do |i|
+			@lengthArrayCSS = content.css('.fp-filename').children.length
+			(0...@lengthArrayCSS).each do |i|
 				@ContentCss = content.css('.fp-filename').children[i].text
 				@arrayGroupses.push(@ContentCss)
 			end
