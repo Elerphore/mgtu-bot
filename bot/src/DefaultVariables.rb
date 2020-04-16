@@ -1,15 +1,3 @@
-class Group
-	def initialize(id, text)
-		@id = id
-		@text = text
-	end
-	
-	attr_reader :id, :text
-end
-
-$firstGroup = Group.new(1, "First Group")
-$secondGroup = Group.new(2, "Second Group")
-
 class WeekDay
 	def initialize(id, title, subtitle)
 		@id = id

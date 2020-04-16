@@ -6,12 +6,12 @@ require './bot/src/CheckAgendaDate.rb'
 require './bot/src/CheckUserId.rb'
 require './bot/src/ScheduleParsing.rb'
 
-def funcToday(selectedGroup, selectedDay, groupTitle)
+def funcToday(group, subgroup, day)
 	@currNumber = Time.now.strftime("%u").to_i
-	if selectedDay == 1
+	if day == 1
 		@currNumber -= 1
 	end
-	return funcListParse($arraysWeek[@currNumber], selectedGroup.id, groupTitle)
+	return funcListParse(group, subgroup, $arraysWeek[@currNumber])
 end
 
 Telegram::Bot::Client.run(ENV["token"]) do |bot|
@@ -21,6 +21,15 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 		
 		def errorFunc
 			@bot.api.send_message(chat_id: @message.chat.id, text: "Произошла ошибка соединения с порталом МГТУ.\nПовторите попытку позже, когда портал заработает: https://newlms.magtu.ru\nВ случае вопросов: @Elerphore", parse_mode: "Markdown")
+		end
+		
+		def serveScheduleRequest(day, subgroup)
+			@group = checkExistGroup(bot, message)
+			if @group != nil
+				if ChangeOldFile() && (@group.kind_of? String)
+					bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: $daySelect)
+				end
+			end
 		end
 		
 		case message
@@ -35,33 +44,13 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 			when '/start'
 				@group = checkExistGroup(bot, message)
 			when 'Сегодня 1 группа'
-				@group = checkExistGroup(bot, message)
-				if @group != nil
-					if ChangeOldFile() && (@group.kind_of? String)
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 1, @group)}", parse_mode: "Markdown", reply_markup: $daySelect)
-					end
-				end
+				serveScheduleRequest(0, 0)
 			when 'Сегодня 2 группа'
-				@group = checkExistGroup(bot, message)
-				if @group != nil
-					if ChangeOldFile() && (@group.kind_of? String)
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 1, @group)}", parse_mode: "Markdown", reply_markup: $daySelect)
-					end
-				end
+				serveScheduleRequest(0, 1)
 			when 'Завтра 1 группа'
-				@group = checkExistGroup(bot, message)
-				if @group != nil
-					if ChangeOldFile() && (@group.kind_of? String)
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($firstGroup, 2, @group)}", parse_mode: "Markdown", reply_markup: $daySelect)
-					end
-				end
+				serveScheduleRequest(1, 0)
 			when 'Завтра 2 группа'
-				@group = checkExistGroup(bot, message)
-				if @group != nil
-					if ChangeOldFile() && (@group.kind_of? String)
-						bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday($secondGroup, 2, @group)}", parse_mode: "Markdown", reply_markup: $daySelect)
-					end
-				end
+				serveScheduleRequest(1, 1)
 			when 'Изменить группу'
 				$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"], :password => ENV["password"])
 				$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` WHERE (`user_id` = '#{message.chat.id}')")
