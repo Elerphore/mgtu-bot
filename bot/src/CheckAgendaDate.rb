@@ -5,7 +5,7 @@ require 'fileutils'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
-$arrayGroupses = []
+$arrayGroups = []
 
 $currentDate = Time.now.strftime "%m-%d"
 def ChangeOldFile
@@ -26,17 +26,17 @@ def ChangeOldFile
 			return nil
 		end
 		
-		@lenghtArrayCSS = content.css('.fp-filename').children.length
-		if @lenghtArrayCSS != 0
-			(0...@lenghtArrayCSS).each do |i|
+		@lengthArrayCSS = content.css('.fp-filename').children.length
+		if @lengthArrayCSS != 0
+			(0...@lengthArrayCSS).each do |i|
 				@ContentCss = content.css('.fp-filename').children[i].text
 				case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?(@ContentCss)
 				when true
 					$agendaFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{@ContentCss}"
 					encoded_url = URI.encode($agendaFile)
-					encoded_pars = URI.parse(encoded_url)
+					encoded_parse = URI.parse(encoded_url)
 					begin
-						download = open(encoded_pars)
+						download = open(encoded_parse)
 					rescue OpenURI::HTTPError => error
 						if error
 							errorFunc()
@@ -58,7 +58,7 @@ def ChangeOldFile
 end
 
 def CheckBaseAgendaExist(group)
-	@arrayGroupses = []
+	@arrayGroups = []
 	if File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 		@oldFile = File.open("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx").mtime().strftime "%m-%d"
 	else
@@ -78,28 +78,28 @@ def CheckBaseAgendaExist(group)
 					return nil
 				end
 			end
-			@lenghtArrayCSS = content.css('.fp-filename').children.length
-			(0...@lenghtArrayCSS).each do |i|
+			@lengthArrayCSS = content.css('.fp-filename').children.length
+			(0...@lengthArrayCSS).each do |i|
 				@ContentCss = content.css('.fp-filename').children[i].text
-				@arrayGroupses.push(@ContentCss)
+				@arrayGroups.push(@ContentCss)
 			end
 			@changeTitle = nil
-			@arrayGroupses.each do |tera|
+			@arrayGroups.each do |tera|
 				if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/) && @changeTitle == nil
 					@changeTitle = tera
 				end
 			end
 			
-			if @arrayGroupses.include?("#{group}.xlsx")
+			if @arrayGroups.include?("#{group}.xlsx")
 				link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{group}.xlsx"
 				encoded_url = URI.encode(link)
-				encoded_pars = URI.parse(encoded_url)
+				encoded_parse = URI.parse(encoded_url)
 				if !File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 					FileUtils.mkdir_p './bot/xlsx/BaseAgendaFiles'
 				end
 				if group != nil
 					begin
-						download = open(encoded_pars)
+						download = open(encoded_parse)
 					rescue OpenURI::HTTPError => error
 						if error
 							errorFunc()
@@ -111,7 +111,7 @@ def CheckBaseAgendaExist(group)
 			elsif @changeTitle != nil
 				link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{@changeTitle}"
 				encoded_url = URI.encode(link)
-				encoded_pars = URI.parse(encoded_url)
+				encoded_parse = URI.parse(encoded_url)
 				
 				if !File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 					FileUtils.mkdir_p './bot/xlsx/BaseAgendaFiles'
@@ -119,7 +119,7 @@ def CheckBaseAgendaExist(group)
 				
 				if group != nil
 					begin
-						download = open(encoded_pars)
+						download = open(encoded_parse)
 					rescue OpenURI::HTTPError => error
 						if error
 							errorFunc()

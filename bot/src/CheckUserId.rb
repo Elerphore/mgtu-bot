@@ -1,6 +1,6 @@
 def createArrayGroups
 	@id = 573029
-	$arrayGroupses = []
+	$arrayGroups = []
 	while @id != 573034
 		begin
 			$content = Nokogiri::HTML(open("https://newlms.magtu.ru/mod/folder/view.php?id=#{@id}"))
@@ -11,21 +11,21 @@ def createArrayGroups
 			end
 		end
 		
-		@lenghtArrayCSS = $content.css('.fp-filename').children.length
+		@lengthArrayCSS = $content.css('.fp-filename').children.length
 		
-		(0...@lenghtArrayCSS).each do |i|
+		(0...@lengthArrayCSS).each do |i|
 			@ContentCss = $content.css('.fp-filename').children[i].text
 			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
-				$arrayGroupses.push(@ContentCss.delete('.xlsx'))
+				$arrayGroups.push(@ContentCss.delete('.xlsx'))
 			elsif /\W{1,4}\-\d{2}\-\d{1} изм. с \d{2}.\d{2}.\d{2}.xlsx$/.match?(@ContentCss)
 				@str = @ContentCss.split[0]
-				$arrayGroupses.push(@str)
+				$arrayGroups.push(@str)
 			end
 		end
 			@id = @id + 1
 	end
 	
-	@keyboards = $arrayGroupses.map do |arr|
+	@keyboards = $arrayGroups.map do |arr|
 		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
 	end
 	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: @keyboards)
