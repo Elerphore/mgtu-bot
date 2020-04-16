@@ -4,8 +4,8 @@ require './bot/src/CheckSubsLesson'
 
 $countY = 3
 
-def funcListPars(day, groupId, groupTitle)
-	@parsArray = []
+def funcListParse(day, groupId, groupTitle)
+	@parseArray = []
 	@mainArray = []
 	$countX = 1
 	
@@ -41,7 +41,7 @@ def funcListPars(day, groupId, groupTitle)
 				@lessonTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1)
 				@class = Hash.new
 				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
-				@parsArray.push(@class)
+				@parseArray.push(@class)
 			end
 		elsif groupId == 2
 			@class = Hash.new
@@ -52,7 +52,7 @@ def funcListPars(day, groupId, groupTitle)
 				@lessonTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 1)
 				@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 4)
 				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
-				@parsArray.push(@class)
+				@parseArray.push(@class)
 			else
 				@lessonTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY)
 				@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY + 1)
@@ -60,7 +60,7 @@ def funcListPars(day, groupId, groupTitle)
 				@lessonCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
 				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
 				
-				@parsArray.push(@class)
+				@parseArray.push(@class)
 			end
 		end
 		$countX = $countX + 2
@@ -69,12 +69,12 @@ def funcListPars(day, groupId, groupTitle)
 	if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 		subsLessonFunc(groupTitle).each do |lesson|
 			if lesson[:dayTitle] == day.title
-				@parsArray[lesson[:count] - 1] = lesson
+				@parseArray[lesson[:count] - 1] = lesson
 			end
 		end
 	end
 	@string = ''
-	@parsArray.each do |less|
+	@parseArray.each do |less|
 		if less[:title] != nil
 			@string =  @string + "#{less[:count]}. #{less[:title]} #{less[:teacher]} #{less[:room]} " + "\n"
 		end
