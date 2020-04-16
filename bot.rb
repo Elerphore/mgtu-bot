@@ -5,6 +5,15 @@ require './bot/src/DayDiverting.rb'
 require './bot/src/DefaultVariables.rb'
 require './bot/src/CheckAgendaDate.rb'
 require './bot/src/CheckUserId.rb'
+require './bot/src/ScheduleParsing.rb'
+
+def funcToday(selectedGroup, selectedDay, groupTitle)
+	@currNumber = Time.now.strftime("%u").to_i
+	if selectedDay == 1
+		@currNumber -= 1
+	end
+	return funcListParse($arraysWeek[@currNumber], selectedGroup.id, groupTitle)
+end
 
 Telegram::Bot::Client.run(ENV["token"]) do |bot|
 	@bot = bot
