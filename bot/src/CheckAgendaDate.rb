@@ -5,7 +5,7 @@ require 'fileutils'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
-$arrayGroupses = []
+$arrayGroups = []
 
 $currentDate = Time.now.strftime "%m-%d"
 def ChangeOldFile
@@ -58,7 +58,7 @@ def ChangeOldFile
 end
 
 def CheckBaseAgendaExist(group)
-	@arrayGroupses = []
+	@arrayGroups = []
 	if File.exist?("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
 		@oldFile = File.open("./bot/xlsx/BaseAgendaFiles/#{group}.xlsx").mtime().strftime "%m-%d"
 	else
@@ -81,16 +81,16 @@ def CheckBaseAgendaExist(group)
 			@lengthArrayCSS = content.css('.fp-filename').children.length
 			(0...@lengthArrayCSS).each do |i|
 				@ContentCss = content.css('.fp-filename').children[i].text
-				@arrayGroupses.push(@ContentCss)
+				@arrayGroups.push(@ContentCss)
 			end
 			@changeTitle = nil
-			@arrayGroupses.each do |tera|
+			@arrayGroups.each do |tera|
 				if tera.match?(/#{group} изм. с \d{2}.\d{2}.\d{2}.xlsx/) && @changeTitle == nil
 					@changeTitle = tera
 				end
 			end
 			
-			if @arrayGroupses.include?("#{group}.xlsx")
+			if @arrayGroups.include?("#{group}.xlsx")
 				link = "https://newlms.magtu.ru/pluginfile.php/#{@path}/mod_folder/content/0/#{group}.xlsx"
 				encoded_url = URI.encode(link)
 				encoded_pars = URI.parse(encoded_url)

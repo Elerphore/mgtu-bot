@@ -17,7 +17,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 		
 		case message
 		when Telegram::Bot::Types::CallbackQuery
-			if $arrayGroupses.include?(message.data)
+			if $arrayGroups.include?(message.data)
 				@group = message.data
 				bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}", reply_markup: $daySelect)
 				$db.query("INSERT INTO heroku_378417f804fd0eb.`user_table_group` VALUES ('#{message.from.id}', '#{message.data}')")
