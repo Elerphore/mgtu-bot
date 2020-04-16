@@ -4,7 +4,7 @@ require './bot/src/CheckSubsLesson'
 
 $countY = 3
 
-def funcListParse(day, groupId, groupTitle)
+def funcListParse(groupTitle, groupId, day)
 	@parseArray = []
 	@mainArray = []
 	$countX = 1
