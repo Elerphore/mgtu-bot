@@ -5,7 +5,7 @@ require './bot/src/CheckAgendaDate.rb'
 require './bot/src/CheckUserId.rb'
 require './bot/src/ScheduleParsing.rb'
 
-weekLocalization = [
+@weekLocalization = [
 	{title: "Воскресенье", subtitle: "Воскресенье"},
 	{title: "Понедельник", subtitle: "Понедельник"},
 	{title: "Вторник", subtitle: "Вторник"},
@@ -21,7 +21,7 @@ mainKeyBoardButtons = [
 		Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')],
 	[Telegram::Bot::Types::KeyboardButton.new(text: 'Изменить группу')]
 ]
-keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
+@keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
 
 def funcToday(group, subgroup, day)
 	@weekDay = Time.now.wday
@@ -29,7 +29,7 @@ def funcToday(group, subgroup, day)
 	if @weekDay == 0
 		@weekday += 1
 	end
-	return funcListParse(group, subgroup, weekLocalization[@weekDay])
+	return funcListParse(group, subgroup, @weekLocalization[@weekDay])
 end
 
 Telegram::Bot::Client.run(ENV["token"]) do |bot|
@@ -45,7 +45,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 			@group = checkExistGroup(@bot, @message)
 			if @group != nil
 				if ChangeOldFile() && (@group.kind_of? String)
-					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: keyboard)
+					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: @keyboard)
 				end
 			end
 		end
