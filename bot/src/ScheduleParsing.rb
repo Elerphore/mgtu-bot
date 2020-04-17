@@ -5,6 +5,8 @@ require './bot/src/CheckSubsLesson'
 $countY = 3
 
 def funcListParse(groupTitle, groupId, day)
+	groupId += 1
+	
 	@parseArray = []
 	@mainArray = []
 	$countX = 1
@@ -13,7 +15,7 @@ def funcListParse(groupTitle, groupId, day)
 	$xlsx = Roo::Excelx.new("./bot/xlsx/BaseAgendaFiles/#{groupTitle}.xlsx")
 	
 	$xlsx.each_row_streaming.to_a.flatten.find do |row|
-		if row.inspect.include?(day.title)
+		if row.inspect.include?(day[:title])
 			@mainArray.push(row)
 			@NumberOne = @mainArray[0]
 			@numberTwo = @mainArray[1]
@@ -68,7 +70,7 @@ def funcListParse(groupTitle, groupId, day)
 	
 	if File.exist?('./bot/xlsx/changeAgenda.xlsx')
 		subsLessonFunc(groupTitle).each do |lesson|
-			if lesson[:dayTitle] == day.title
+			if lesson[:dayTitle] == day[:title]
 				@parseArray[lesson[:count] - 1] = lesson
 			end
 		end
@@ -79,6 +81,6 @@ def funcListParse(groupTitle, groupId, day)
 			@string =  @string + "#{less[:count]}. #{less[:title]} #{less[:teacher]} #{less[:room]} " + "\n"
 		end
 	end
-	@poststring = "Расписание группы: #{groupTitle} на #{day.subtitle}: \n\n"
+	@poststring = "Расписание группы: #{groupTitle} на #{day[:subtitle]}: \n\n"
 	return @poststring + @string
 end

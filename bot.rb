@@ -6,12 +6,31 @@ require './bot/src/CheckAgendaDate.rb'
 require './bot/src/CheckUserId.rb'
 require './bot/src/ScheduleParsing.rb'
 
+weekLocalization = [
+	{title: "Воскресенье", subtitle: "Воскресенье"},
+	{title: "Понедельник", subtitle: "Понедельник"},
+	{title: "Вторник", subtitle: "Вторник"},
+	{title: "Среда", subtitle: "Среду"},
+	{title: "Четверг", subtitle: "Четверг"},
+	{title: "Пятница", subtitle: "Пятницу"},
+	{title: "Суббота", subtitle: "Субботу"}]
+
+mainKeyBoardButtons = [
+	[Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 1 группа'),
+		Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 2 группа')],
+	[Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 1 группа'),
+		Telegram::Bot::Types::KeyboardButton.new(text: 'Завтра 2 группа')],
+	[Telegram::Bot::Types::KeyboardButton.new(text: 'Изменить группу')]
+]
+keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
+
 def funcToday(group, subgroup, day)
-	@currNumber = Time.now.strftime("%u").to_i
-	if day == 1
-		@currNumber -= 1
+	@weekDay = Time.now.wday
+	@weekDay += day
+	if @weekDay == 0
+		@weekday += 1
 	end
-	return funcListParse(group, subgroup, $arraysWeek[@currNumber])
+	return funcListParse(group, subgroup, weekLocalization[@weekDay])
 end
 
 Telegram::Bot::Client.run(ENV["token"]) do |bot|
@@ -27,7 +46,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 			@group = checkExistGroup(@bot, @message)
 			if @group != nil
 				if ChangeOldFile() && (@group.kind_of? String)
-					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: $daySelect)
+					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: keyboard)
 				end
 			end
 		end
