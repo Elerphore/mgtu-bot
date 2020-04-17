@@ -69,9 +69,9 @@ def funcListParse(groupTitle, groupId, day)
 	end
 	
 	if File.exist?('./bot/xlsx/changeAgenda.xlsx')
-		subsClassFunc(groupTitle).each do |class|
-			if class[:dayTitle] == day[:title]
-				@parseArray[class[:count] - 1] = class
+		subsClassFunc(groupTitle).each do |_class|
+			if _class[:dayTitle] == day[:title]
+				@parseArray[_class[:count] - 1] = _class
 			end
 		end
 	end
