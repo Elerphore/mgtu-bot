@@ -31,36 +31,36 @@ def funcListParse(groupTitle, groupId, day)
 	while $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1) != nil ||
 	$xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 3) != nil
 		if groupId == 1
-			@lessonRoom = nil
+			@classRoom = nil
 			if $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1) != nil
 				if $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 2) != nil
-					@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 2)
+					@classRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 2)
 				else
-					@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 4)
+					@classRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 4)
 				end
-				@lessonCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
-				@lessonTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 1)
-				@lessonTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1)
+				@classCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
+				@classTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 1)
+				@classTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + 1)
 				@class = Hash.new
-				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
+				@class = {:room => @classRoom, :count => @classCount, :teacher => @classTeacher, :title => @classTitle}
 				@parseArray.push(@class)
 			end
 		elsif groupId == 2
 			@class = Hash.new
 			if $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY) == nil &&
 			$xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY + 1) != nil
-				@lessonTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY - 2)
-				@lessonCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
-				@lessonTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 1)
-				@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 4)
-				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
+				@classTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY - 2)
+				@classCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
+				@classTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 1)
+				@classRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + 4)
+				@class = {:room => @classRoom, :count => @classCount, :teacher => @classTeacher, :title => @classTitle}
 				@parseArray.push(@class)
 			else
-				@lessonTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY)
-				@lessonRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY + 1)
-				@lessonTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY)
-				@lessonCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
-				@class = {:room => @lessonRoom, :count => @lessonCount, :teacher => @lessonTeacher, :title => @lessonTitle}
+				@classTitle = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1] + $countY)
+				@classRoom = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY + 1)
+				@classTeacher = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX + 1, @currentWeek.coordinate[1] + $countY)
+				@classCount = $xlsx.sheet(0).cell(@currentWeek.coordinate[0] + $countX, @currentWeek.coordinate[1])
+				@class = {:room => @classRoom, :count => @classCount, :teacher => @classTeacher, :title => @classTitle}
 				
 				@parseArray.push(@class)
 			end
@@ -69,9 +69,9 @@ def funcListParse(groupTitle, groupId, day)
 	end
 	
 	if File.exist?('./bot/xlsx/changeAgenda.xlsx')
-		subsLessonFunc(groupTitle).each do |lesson|
-			if lesson[:dayTitle] == day[:title]
-				@parseArray[lesson[:count] - 1] = lesson
+		subsClassFunc(groupTitle).each do |class|
+			if class[:dayTitle] == day[:title]
+				@parseArray[class[:count] - 1] = class
 			end
 		end
 	end
