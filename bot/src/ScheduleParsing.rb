@@ -1,6 +1,6 @@
 require 'roo'
 
-require './bot/src/CheckSubsLesson'
+require './bot/src/CheckSubsClasses.rb'
 
 $countY = 3
 
