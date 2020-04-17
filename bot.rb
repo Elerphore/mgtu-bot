@@ -16,7 +16,7 @@ end
 
 Telegram::Bot::Client.run(ENV["token"]) do |bot|
 	@bot = bot
-	bot.listen do |message|
+	@bot.listen do |message|
 		@message = message
 		
 		def errorFunc
@@ -24,25 +24,25 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 		end
 		
 		def serveScheduleRequest(day, subgroup)
-			@group = checkExistGroup(bot, message)
+			@group = checkExistGroup(@bot, @message)
 			if @group != nil
 				if ChangeOldFile() && (@group.kind_of? String)
-					bot.api.send_message(chat_id: message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: $daySelect)
+					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: $daySelect)
 				end
 			end
 		end
 		
-		case message
+		case @message
 		when Telegram::Bot::Types::CallbackQuery
-			if $arrayGroups.include?(message.data)
-				@group = message.data
-				bot.api.send_message(chat_id: message.from.id, text: "Выбранная вами группа: #{@group}", reply_markup: $daySelect)
-				$db.query("INSERT INTO heroku_378417f804fd0eb.`user_table_group` VALUES ('#{message.from.id}', '#{message.data}')")
+			if $arrayGroups.include?(@message.data)
+				@group = @message.data
+				@bot.api.send_message(chat_id: @message.from.id, text: "Выбранная вами группа: #{@group}", reply_markup: $daySelect)
+				$db.query("INSERT INTO heroku_378417f804fd0eb.`user_table_group` VALUES ('#{@message.from.id}', '#{@message.data}')")
 			end
 		when Telegram::Bot::Types::Message
-			case message.text
+			case @message.text
 			when '/start'
-				@group = checkExistGroup(bot, message)
+				@group = checkExistGroup(@bot, @message)
 			when 'Сегодня 1 группа'
 				serveScheduleRequest(0, 0)
 			when 'Сегодня 2 группа'
@@ -53,9 +53,9 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 				serveScheduleRequest(1, 1)
 			when 'Изменить группу'
 				$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"], :password => ENV["password"])
-				$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` WHERE (`user_id` = '#{message.chat.id}')")
+				$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` WHERE (`user_id` = '#{@message.chat.id}')")
 				createArrayGroups()
-				bot.api.send_message(chat_id: message.chat.id, text: 'Выбранная группа удалена.', reply_markup: $selecteGroup)
+				@bot.api.send_message(chat_id: @message.chat.id, text: 'Выбранная группа удалена.', reply_markup: $selecteGroup)
 			end
 		end
 	end
