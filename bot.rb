@@ -6,13 +6,13 @@ require './bot/src/CheckUserId.rb'
 require './bot/src/ScheduleParsing.rb'
 
 @weekLocalization = [
-	{title: "Воскресенье", subtitle: "Воскресенье"},
-	{title: "Понедельник", subtitle: "Понедельник"},
-	{title: "Вторник", subtitle: "Вторник"},
-	{title: "Среда", subtitle: "Среду"},
-	{title: "Четверг", subtitle: "Четверг"},
-	{title: "Пятница", subtitle: "Пятницу"},
-	{title: "Суббота", subtitle: "Субботу"}]
+	{title: "Воскресенье",	subtitle: "Воскресенье"},
+	{title: "Понедельник",	subtitle: "Понедельник"},
+	{title: "Вторник",			subtitle: "Вторник"},
+	{title: "Среда",				subtitle: "Среду"},
+	{title: "Четверг",			subtitle: "Четверг"},
+	{title: "Пятница",			subtitle: "Пятницу"},
+	{title: "Суббота",			subtitle: "Субботу"}]
 
 mainKeyBoardButtons = [
 	[Telegram::Bot::Types::KeyboardButton.new(text: 'Сегодня 1 группа'),
