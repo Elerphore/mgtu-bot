@@ -1,7 +1,6 @@
 require 'telegram/bot'
 require 'mysql2'
 
-require './bot/src/DefaultVariables.rb'
 require './bot/src/CheckAgendaDate.rb'
 require './bot/src/CheckUserId.rb'
 require './bot/src/ScheduleParsing.rb'
