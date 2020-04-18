@@ -22,7 +22,6 @@ def ChangeOldFile
 			content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'))
 		rescue OpenURI::HTTPError => error
 			errorFunc()
-			p 'test2'
 			return nil
 		end
 		
@@ -123,7 +122,7 @@ def CheckBaseAgendaExist(group)
 					rescue OpenURI::HTTPError => error
 						if error
 							errorFunc()
-							return
+							return nil
 						end
 					end
 					IO.copy_stream(download, "./bot/xlsx/BaseAgendaFiles/#{group}.xlsx")
