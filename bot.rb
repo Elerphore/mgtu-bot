@@ -23,7 +23,7 @@ mainKeyBoardButtons = [
 ]
 @keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
 
-def funcToday(dayOffset)
+def weekDayIndex(dayOffset)
 	unless (1..6).include?(weekDay = Time.now.wday + dayOffset)
 		weekDay = 1
 	end
@@ -43,7 +43,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 			group = checkExistGroup(@bot, @message)
 			if group != nil
 				if ChangeOldFile() && (group.kind_of? String)
-					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcListParse(group, subgroup, @weekLocalization[funcToday(dayOffset)])}", parse_mode: "Markdown", reply_markup: @keyboard)
+					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcListParse(group, subgroup, @weekLocalization[weekDayIndex(dayOffset)])}", parse_mode: "Markdown", reply_markup: @keyboard)
 				end
 			end
 		end
