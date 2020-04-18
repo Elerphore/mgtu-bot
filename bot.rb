@@ -24,9 +24,8 @@ mainKeyBoardButtons = [
 @keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
 
 def funcToday(group, subgroup, dayOffset)
-	@weekDay = Time.now.wday + dayOffset
-	unless (1...6).include?(@weekDay)
-		@weekDay == 1
+	unless (1..6).include?(@weekDay = Time.now.wday + dayOffset)
+		@weekDay = 1
 	end
 	return funcListParse(group, subgroup, @weekLocalization[@weekDay])
 end
