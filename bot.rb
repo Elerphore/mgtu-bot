@@ -23,11 +23,10 @@ mainKeyBoardButtons = [
 ]
 @keyboard = Telegram::Bot::Types::ReplyKeyboardMarkup.new(keyboard: mainKeyBoardButtons, one_time_keyboard: false)
 
-def funcToday(group, subgroup, day)
-	@weekDay = Time.now.wday
-	@weekDay += day
-	if @weekDay == 0
-		@weekday += 1
+def funcToday(group, subgroup, dayOffset)
+	@weekDay = Time.now.wday + dayOffset
+	unless (1...6).include?(@weekDay)
+		@weekDay == 1
 	end
 	return funcListParse(group, subgroup, @weekLocalization[@weekDay])
 end
@@ -41,11 +40,11 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 			@bot.api.send_message(chat_id: @message.chat.id, text: "Произошла ошибка соединения с порталом МГТУ.\nПовторите попытку позже, когда портал заработает: https://newlms.magtu.ru\nВ случае вопросов: @Elerphore", parse_mode: "Markdown")
 		end
 		
-		def serveScheduleRequest(day, subgroup)
+		def serveScheduleRequest(dayOffset, subgroup)
 			@group = checkExistGroup(@bot, @message)
 			if @group != nil
 				if ChangeOldFile() && (@group.kind_of? String)
-					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, day)}", parse_mode: "Markdown", reply_markup: @keyboard)
+					@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcToday(@group, subgroup, dayOffset)}", parse_mode: "Markdown", reply_markup: @keyboard)
 				end
 			end
 		end
