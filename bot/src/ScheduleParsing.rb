@@ -11,8 +11,8 @@ def funcListParse(groupTitle, groupId, day)
 	@mainArray = []
 	$countX = 1
 	
-	CheckBaseAgendaExist(groupTitle)
-	$xlsx = Roo::Excelx.new("./bot/xlsx/BaseAgendaFiles/#{groupTitle}.xlsx")
+	CheckBaseScheduleExist(groupTitle)
+	$xlsx = Roo::Excelx.new("./bot/xlsx/BaseScheduleFiles/#{groupTitle}.xlsx")
 	
 	$xlsx.each_row_streaming.to_a.flatten.find do |row|
 		if row.inspect.include?(day[:title])
@@ -68,7 +68,7 @@ def funcListParse(groupTitle, groupId, day)
 		$countX = $countX + 2
 	end
 	
-	if File.exist?('./bot/xlsx/changeAgenda.xlsx')
+	if File.exist?('./bot/xlsx/changeSchedule.xlsx')
 		subsClassFunc(groupTitle).each do |_class|
 			if _class[:dayTitle] == day[:title]
 				@parseArray[_class[:count] - 1] = _class
