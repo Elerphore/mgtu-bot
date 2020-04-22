@@ -17,13 +17,13 @@ def funcListParse(groupTitle, groupId, day)
 	$xlsx.each_row_streaming.to_a.flatten.find do |row|
 		if row.inspect.include?(day[:title])
 			@mainArray.push(row)
-			@NumberOne = @mainArray[0]
+			@numberOne = @mainArray[0]
 			@numberTwo = @mainArray[1]
 		end
 	end
 	
 	if Time.now.strftime("%U").to_i.even? == false
-		@currentWeek = @NumberOne
+		@currentWeek = @numberOne
 	else
 		@currentWeek = @numberTwo
 	end

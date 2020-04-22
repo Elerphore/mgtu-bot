@@ -14,11 +14,11 @@ def createArrayGroups
 		@lengthArrayCSS = $content.css('.fp-filename').children.length
 		
 		(0...@lengthArrayCSS).each do |i|
-			@ContentCss = $content.css('.fp-filename').children[i].text
-			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@ContentCss)
-				$arrayGroups.push(@ContentCss.delete('.xlsx'))
-			elsif /\W{1,4}\-\d{2}\-\d{1} изм. с \d{2}.\d{2}.\d{2}.xlsx$/.match?(@ContentCss)
-				@str = @ContentCss.split[0]
+			@contentCSS = $content.css('.fp-filename').children[i].text
+			if /\W{1,4}\-\d{2}\-\d{1}.xlsx$/.match?(@contentCSS)
+				$arrayGroups.push(@contentCSS.delete('.xlsx'))
+			elsif /\W{1,4}\-\d{2}\-\d{1} изм. с \d{2}.\d{2}.\d{2}.xlsx$/.match?(@contentCSS)
+				@str = @contentCSS.split[0]
 				$arrayGroups.push(@str)
 			end
 		end

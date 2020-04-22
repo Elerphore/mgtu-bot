@@ -10,13 +10,13 @@ $arrayGroups = []
 $currentDate = Time.now.strftime "%m-%d"
 def ChangeOldFile
 	if File.exist?("./bot/xlsx/changeSchedule.xlsx")
-		@FilesOld =	File.open("./bot/xlsx/changeSchedule.xlsx")
-		@oldFile = @FilesOld.mtime().strftime "%m-%d"
+		@filesOld =	File.open("./bot/xlsx/changeSchedule.xlsx")
+		@oldFile = @filesOld.mtime().strftime "%m-%d"
 	else
 		@oldFile = nil
 	end
 	if !(@oldFile == $currentDate)
-		@FilesOld.close if File.exist?("./bot/xlsx/changeSchedule.xlsx")
+		@filesOld.close if File.exist?("./bot/xlsx/changeSchedule.xlsx")
 		File.delete("./bot/xlsx/changeSchedule.xlsx") if File.exist?("./bot/xlsx/changeSchedule.xlsx")
 		begin
 			content = Nokogiri::HTML(open('https://newlms.magtu.ru/mod/folder/view.php?id=573034'))
@@ -28,10 +28,10 @@ def ChangeOldFile
 		@lengthArrayCSS = content.css('.fp-filename').children.length
 		if @lengthArrayCSS != 0
 			(0...@lengthArrayCSS).each do |i|
-				@ContentCss = content.css('.fp-filename').children[i].text
-				case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?(@ContentCss)
+				@contentCSS = content.css('.fp-filename').children[i].text
+				case /\d{2}\.\d{2}\.\d{2} - \d{2}\.\d{2}\.\d{2}\.xlsx/.match?(@contentCSS)
 				when true
-					$scheduleFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{@ContentCss}"
+					$scheduleFile = "https://newlms.magtu.ru/pluginfile.php/1160930/mod_folder/content/0/#{@contentCSS}"
 					encoded_url = URI.encode($scheduleFile)
 					encoded_parse = URI.parse(encoded_url)
 					begin
@@ -79,8 +79,8 @@ def CheckBaseScheduleExist(group)
 			end
 			@lengthArrayCSS = content.css('.fp-filename').children.length
 			(0...@lengthArrayCSS).each do |i|
-				@ContentCss = content.css('.fp-filename').children[i].text
-				@arrayGroups.push(@ContentCss)
+				@contentCSS = content.css('.fp-filename').children[i].text
+				@arrayGroups.push(@contentCSS)
 			end
 			@changeTitle = nil
 			@arrayGroups.each do |tera|
