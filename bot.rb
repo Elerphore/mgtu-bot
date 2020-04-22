@@ -55,7 +55,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 		when Telegram::Bot::Types::Message
 			case @message.text
 			when '/start'
-				@group = checkExistGroup(@bot, @message)
+				@bot.api.send_message(chat_id: @message.chat.id, text: "Готов подсказать расписание.", parse_mode: "Markdown", reply_markup: @keyboard)
 			when 'Сегодня 1 группа'
 				serveScheduleRequest(0, 0)
 			when 'Сегодня 2 группа'
