@@ -28,7 +28,7 @@ def createArrayGroups
 	@keyboards = $arrayGroups.map do |arr|
 		Telegram::Bot::Types::InlineKeyboardButton.new(text: arr, callback_data: arr)
 	end
-	$selecteGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: @keyboards)
+	$selectedGroup =  Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: @keyboards)
 end
 
 def checkExistGroup(bot, message)
@@ -40,8 +40,8 @@ def checkExistGroup(bot, message)
 		return @userHash["group_name"]
 	else
 		createArrayGroups()
-		if $selecteGroup != nil
-			bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: $selecteGroup)
+		if $selectedGroup != nil
+			bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: $selectedGroup)
 		end
 	end
 end
