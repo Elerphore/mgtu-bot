@@ -78,7 +78,7 @@ def funcListParse(groupTitle, groupId, day)
 	@string = ''
 	@parseArray.each do |less|
 		if less[:title] != nil
-			@string =  @string + "#{less[:count]}. #{less[:title]} #{less[:teacher]} #{less[:room]} " + "\n"
+			@string = @string + "#{less[:count]}. #{less[:title]} #{less[:teacher]} #{less[:room]} " + "\n"
 		end
 	end
 	@poststring = "Расписание группы: #{groupTitle} на #{day[:subtitle]}: \n\n"

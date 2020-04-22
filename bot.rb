@@ -68,7 +68,7 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 				$db = Mysql2::Client.new(:host => "eu-cdbr-west-02.cleardb.net", :username => ENV["login"], :password => ENV["password"])
 				$db.query("DELETE FROM heroku_378417f804fd0eb.`user_table_group` WHERE (`user_id` = '#{@message.chat.id}')")
 				createArrayGroups()
-				@bot.api.send_message(chat_id: @message.chat.id, text: 'Выбранная группа удалена.', reply_markup: $selecteGroup)
+				@bot.api.send_message(chat_id: @message.chat.id, text: 'Выбранная группа удалена.', reply_markup: $selectedGroup)
 			end
 		end
 	end
