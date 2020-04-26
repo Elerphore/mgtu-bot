@@ -44,9 +44,8 @@ def getUserGroup(bot, message)
 	group = queryUserGroup
 	if group
 		return group
-	else
-		if createArrayGroups()
-			bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: getGroupsInlineKeyboard)
-		end
+	elsif createArrayGroups()
+		bot.api.send_message(chat_id: message.chat.id, text: 'Бот не знает вашей группы, выберите её из списка.', reply_markup: getGroupsInlineKeyboard)
+		return nil
 	end
 end
