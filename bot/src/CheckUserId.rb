@@ -41,7 +41,7 @@ def queryUserGroup(bot, message)
 end
 
 def getUserGroup(bot, message)
-	group = queryUserGroup
+	group = queryUserGroup(bot, message)
 	if group
 		return group
 	elsif createArrayGroups()
