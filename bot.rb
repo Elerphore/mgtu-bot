@@ -40,9 +40,9 @@ Telegram::Bot::Client.run(ENV["token"]) do |bot|
 		end
 		
 		def serveScheduleRequest(dayOffset, subgroup)
-			if (group = checkExistGroup(@bot, @message)).kind_of?(String) && ChangeOldFile()
-				@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcListParse(group, subgroup, @weekLocalization[weekDayIndex(dayOffset)])}", parse_mode: "Markdown", reply_markup: @keyboard)
-			end
+			group = getUserGroup(@bot, @message) &&
+			ChangeOldFile() &&
+			@bot.api.send_message(chat_id: @message.chat.id, text: "#{funcListParse(group, subgroup, @weekLocalization[weekDayIndex(dayOffset)])}", parse_mode: "Markdown", reply_markup: @keyboard)
 		end
 		
 		case @message
