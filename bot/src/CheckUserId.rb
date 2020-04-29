@@ -36,7 +36,7 @@ end
 
 def queryUserGroup(bot, message)
 	$db = Mysql2::Client.new(host: "eu-cdbr-west-02.cleardb.net", username: ENV["login"], password: ENV["password"])
-	group = $db.query("SELECT group_name FROM heroku_378417f804fd0eb.`user_table_group` WHERE user_id = #{message.chat.id}")&.[](0)
+	group = $db.query("SELECT group_name FROM heroku_378417f804fd0eb.`user_table_group` WHERE user_id = #{message.chat.id}").to_a&.[](0)
 	return group
 end
 
